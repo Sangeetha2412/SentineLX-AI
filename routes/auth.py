@@ -3,7 +3,7 @@ SentinelX - Authentication Routes
 """
 
 from datetime import datetime
-
+import os
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required, current_user
 
@@ -50,7 +50,16 @@ def register():
             flash("Username or email already registered.", "error")
             return render_template("register.html")
 
-        user = User(username=username, email=email)
+        admin_email = os.getenv("ADMIN_EMAIL", "").lower()
+
+        role = "admin" if email == admin_email else "user"
+
+        user = User(
+            username=username,
+            email=email,
+            role=role
+        )
+
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
