@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Security Headers Checker{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">🛡️ Security Headers Checker</div><div class="page-subtitle">Audit HTTP security headers against best practices.</div></div>
+</div>
+<div class="glass-panel">
+  <form method="POST">
+    <div class="form-group"><label class="form-label">Website URL</label><input type="text" name="url" class="form-input" placeholder="example.com" required></div>
+    <button type="submit" class="btn btn-primary">Scan Headers</button>
+  </form>
+  {% if result %}
+    {% if result.success %}
+    <div class="result-box">
+      <div class="result-row"><span class="result-key">Score</span><span class="result-val">{{ result.score }}/100</span></div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" data-score="{{ result.score }}" style="width:0%;"></div></div>
+    </div>
+    <div class="mt-16 grid-2">
+      <div>
+        <div class="form-label">Present Headers</div>
+        {% for h, v in result.present_headers.items() %}
+        <div class="badge badge-success mt-16" style="display:block; margin-bottom:6px;">{{ h }}</div>
+        {% endfor %}
+      </div>
+      <div>
+        <div class="form-label">Missing Headers</div>
+        {% for h in result.missing_headers %}
+        <div class="badge badge-danger mt-16" style="display:block; margin-bottom:6px;">{{ h }}</div>
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <div class="result-box"><span style="color:var(--danger);">Error: {{ result.error }}</span></div>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

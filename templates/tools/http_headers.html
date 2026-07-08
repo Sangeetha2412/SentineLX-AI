@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}HTTP Header Viewer{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">📋 HTTP Header Viewer</div><div class="page-subtitle">View raw response headers for any URL.</div></div>
+</div>
+<div class="glass-panel">
+  <form method="POST">
+    <div class="form-group"><label class="form-label">URL</label><input type="text" name="url" class="form-input" placeholder="example.com" required></div>
+    <button type="submit" class="btn btn-primary">Fetch Headers</button>
+  </form>
+  {% if result %}
+    {% if result.success %}
+    <div class="result-box">
+      <div class="result-row"><span class="result-key">Status Code</span><span class="result-val">{{ result.status_code }}</span></div>
+      {% for h, v in result.headers.items() %}
+      <div class="result-row"><span class="result-key">{{ h }}</span><span class="result-val">{{ v }}</span></div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="result-box"><span style="color:var(--danger);">Error: {{ result.error }}</span></div>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

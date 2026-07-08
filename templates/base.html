@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}SentinelX{% endblock %} | SentinelX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+  <div class="cyber-grid"></div>
+  <div id="particles-bg"></div>
+
+  {% if current_user.is_authenticated %}
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="brand-dot"></span> SentinelX</div>
+
+      <div class="nav-section-label">Overview</div>
+      <a href="{{ url_for('dashboard.home') }}" class="nav-link {{ 'active' if request.endpoint == 'dashboard.home' }}">📊 Dashboard</a>
+      <a href="{{ url_for('ai.ai_assistant') }}" class="nav-link {{ 'active' if request.endpoint == 'ai.ai_assistant' }}">🤖 AI Assistant</a>
+      <a href="{{ url_for('reports.reports_list') }}" class="nav-link {{ 'active' if request.endpoint == 'reports.reports_list' }}">📄 Reports</a>
+
+      <div class="nav-section-label">Password Tools</div>
+      <a href="{{ url_for('tools.password_strength') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.password_strength' }}">🔐 Strength Analyzer</a>
+      <a href="{{ url_for('tools.password_generator') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.password_generator' }}">🎲 Password Generator</a>
+
+      <div class="nav-section-label">Hashing</div>
+      <a href="{{ url_for('tools.hash_generator') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.hash_generator' }}">#️⃣ Hash Generator</a>
+      <a href="{{ url_for('tools.hash_checker') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.hash_checker' }}">✅ Hash Checker</a>
+      <a href="{{ url_for('tools.file_hash') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.file_hash' }}">📁 File Hash</a>
+      <a href="{{ url_for('tools.base64_tool') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.base64_tool' }}">🔤 Base64</a>
+
+      <div class="nav-section-label">Recon</div>
+      <a href="{{ url_for('tools.whois_tool') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.whois_tool' }}">🌐 WHOIS Lookup</a>
+      <a href="{{ url_for('tools.dns_tool') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.dns_tool' }}">🧭 DNS Lookup</a>
+      <a href="{{ url_for('tools.ip_lookup_tool') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.ip_lookup_tool' }}">📍 IP Lookup</a>
+      <a href="{{ url_for('tools.subdomain_discovery') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.subdomain_discovery' }}">🗺️ Subdomain Discovery</a>
+
+      <div class="nav-section-label">Web Security</div>
+      <a href="{{ url_for('tools.ssl_checker') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.ssl_checker' }}">🔒 SSL Checker</a>
+      <a href="{{ url_for('tools.security_headers') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.security_headers' }}">🛡️ Security Headers</a>
+      <a href="{{ url_for('tools.url_reputation') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.url_reputation' }}">🎣 URL Reputation (AI)</a>
+      <a href="{{ url_for('tools.http_headers') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.http_headers' }}">📋 HTTP Headers</a>
+      <a href="{{ url_for('tools.robots_txt') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.robots_txt' }}">🤖 Robots.txt Viewer</a>
+      <a href="{{ url_for('tools.port_scanner') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.port_scanner' }}">🔌 Port Scanner</a>
+      <a href="{{ url_for('tools.email_header_analyzer') }}" class="nav-link {{ 'active' if request.endpoint == 'tools.email_header_analyzer' }}">📧 Email Header Analyzer</a>
+
+      <div class="nav-section-label">Account</div>
+      <a href="{{ url_for('profile.profile') }}" class="nav-link {{ 'active' if request.endpoint == 'profile.profile' }}">👤 Profile</a>
+      <a href="{{ url_for('profile.settings') }}" class="nav-link {{ 'active' if request.endpoint == 'profile.settings' }}">⚙️ Settings</a>
+      {% if current_user.is_admin %}
+      <a href="{{ url_for('profile.admin_dashboard') }}" class="nav-link {{ 'active' if request.endpoint == 'profile.admin_dashboard' }}">🛠️ Admin Dashboard</a>
+      {% endif %}
+      <a href="{{ url_for('auth.logout') }}" class="nav-link">🚪 Logout</a>
+    </aside>
+
+    <main class="main-content">
+      <button id="sidebar-toggle" class="btn btn-ghost" style="display:none; margin-bottom:16px;">☰ Menu</button>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  {% else %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div style="position:relative; z-index:2; max-width:420px; margin:20px auto 0;">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block guest_content %}{% endblock %}
+  {% endif %}
+
+  <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

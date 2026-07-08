@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">📄 Security Reports</div><div class="page-subtitle">Generate a PDF summary of your recent scan activity.</div></div>
+</div>
+
+<div class="glass-panel">
+  <form method="POST" action="{{ url_for('reports.generate_report') }}" class="flex gap-10 items-center">
+    <input type="text" name="title" class="form-input" placeholder="Report title (optional)" style="flex:1;">
+    <button type="submit" class="btn btn-primary">Generate Report</button>
+  </form>
+</div>
+
+<div class="glass-panel mt-24">
+  <div class="page-title" style="font-size:16px; margin-bottom:14px;">Your Reports</div>
+  {% if reports %}
+  <table class="data-table">
+    <thead><tr><th>Title</th><th>Risk Score</th><th>Created</th><th></th></tr></thead>
+    <tbody>
+      {% for r in reports %}
+      <tr>
+        <td>{{ r.title }}</td>
+        <td>{{ r.risk_score|round(1) }}</td>
+        <td class="text-muted">{{ r.created_at.strftime('%b %d, %Y %H:%M') }}</td>
+        <td><a href="{{ url_for('reports.download_report', report_id=r.id) }}" class="btn btn-ghost">Download</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="text-muted">No reports yet. Run some tools, then generate your first report.</p>
+  {% endif %}
+</div>
+{% endblock %}

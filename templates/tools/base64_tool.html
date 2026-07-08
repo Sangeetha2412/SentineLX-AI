@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Base64 Encoder/Decoder{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">🔤 Base64 Encoder / Decoder</div><div class="page-subtitle">Encode or decode text using Base64.</div></div>
+</div>
+<div class="glass-panel">
+  <form method="POST">
+    <div class="form-group"><label class="form-label">Text</label><textarea name="text" class="form-input" rows="4" required></textarea></div>
+    <div class="form-group flex gap-10">
+      <label class="form-check"><input type="radio" name="mode" value="encode" checked> Encode</label>
+      <label class="form-check"><input type="radio" name="mode" value="decode"> Decode</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Run</button>
+  </form>
+  {% if result %}
+  <div class="result-box">
+    {% if result.error %}
+      <span style="color:var(--danger);">Error: {{ result.error }}</span>
+    {% else %}
+      <span id="b64-output">{{ result.output }}</span>
+    {% endif %}
+  </div>
+  {% if not result.error %}<button class="btn btn-ghost mt-16" data-copy="#b64-output">Copy Result</button>{% endif %}
+  {% endif %}
+</div>
+{% endblock %}

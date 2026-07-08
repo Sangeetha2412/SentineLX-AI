@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}403 Forbidden{% endblock %}
+{% block guest_content %}
+<div class="hero"><h1>403</h1><p>You don't have permission to access this page.</p><a href="/" class="btn btn-primary">Go Home</a></div>
+{% endblock %}
+{% block content %}
+<div class="hero"><h1>403</h1><p>You don't have permission to access this page.</p><a href="{{ url_for('dashboard.home') }}" class="btn btn-primary">Go to Dashboard</a></div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}AI Security Assistant{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">🤖 AI Security Assistant</div><div class="page-subtitle">Powered by Groq. Ask about vulnerabilities, concepts, or your scan results.</div></div>
+</div>
+
+<div class="glass-panel">
+  <div class="chat-window" id="chat-window">
+    {% if not history %}
+    <div class="chat-bubble assistant">Hi! I'm the SentinelX AI Assistant. Ask me to explain a vulnerability, interpret a scan result, or teach you a security concept.</div>
+    {% endif %}
+    {% for msg in history %}
+    <div class="chat-bubble {{ msg.role }}">{{ msg.message }}</div>
+    {% endfor %}
+  </div>
+  <form id="chat-form" class="flex gap-10 mt-16">
+    <input type="text" id="chat-input" class="form-input" placeholder="Ask about a CVE, header, or best practice..." autocomplete="off">
+    <button type="submit" class="btn btn-primary">Send</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Create Account{% endblock %}
+{% block guest_content %}
+<div class="auth-wrapper">
+  <div class="glass-panel auth-card">
+    <div class="brand" style="justify-content:center; padding-bottom: 10px;"><span class="brand-dot"></span> SentinelX</div>
+    <p class="text-muted" style="text-align:center; margin-bottom:22px; font-size:13px;">Create your free security account</p>
+    <form method="POST">
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" name="username" class="form-input" required autofocus>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-input" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-input" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" name="confirm_password" class="form-input" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-full">Create Account</button>
+    </form>
+    <p class="text-muted" style="text-align:center; margin-top:18px; font-size:13px;">
+      Already have an account? <a href="{{ url_for('auth.login') }}" style="color:var(--cyan);">Sign in</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

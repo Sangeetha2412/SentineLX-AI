@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Hash Generator{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">#️⃣ Hash Generator</div><div class="page-subtitle">Generate MD5, SHA1, SHA256, SHA512 for any text.</div></div>
+</div>
+<div class="glass-panel">
+  <form method="POST">
+    <div class="form-group">
+      <label class="form-label">Text</label>
+      <textarea name="text" class="form-input" rows="4" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Generate Hashes</button>
+  </form>
+  {% if hashes %}
+  <div class="result-box">
+    {% for algo, value in hashes.items() %}
+    <div class="result-row"><span class="result-key">{{ algo.upper() }}</span><span class="result-val">{{ value }}</span></div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}DNS Lookup{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">🧭 DNS Lookup</div><div class="page-subtitle">Resolve A, AAAA, MX, NS, TXT, CNAME, and SOA records.</div></div>
+</div>
+<div class="glass-panel">
+  <form method="POST">
+    <div class="form-group"><label class="form-label">Domain</label><input type="text" name="domain" class="form-input" placeholder="example.com" required></div>
+    <button type="submit" class="btn btn-primary">Resolve</button>
+  </form>
+  {% if result %}
+  <div class="result-box">
+    {% for rtype, values in result.records.items() %}
+    <div class="result-row" style="align-items:flex-start;">
+      <span class="result-key">{{ rtype }}</span>
+      <span class="result-val">
+        {% if values %}{% for v in values %}{{ v }}<br>{% endfor %}{% else %}<span class="text-muted">No records</span>{% endif %}
+      </span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

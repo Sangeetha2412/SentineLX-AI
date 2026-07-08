@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}URL Reputation Checker{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">🎣 URL Reputation Checker</div><div class="page-subtitle">ML classifier trained on lexical/structural URL features (no external content is fetched).</div></div>
+</div>
+<div class="glass-panel">
+  <form method="POST">
+    <div class="form-group"><label class="form-label">URL</label><input type="text" name="url" class="form-input" placeholder="https://example.com/login" required></div>
+    <button type="submit" class="btn btn-primary">Analyze URL</button>
+  </form>
+  {% if result %}
+    {% if result.available %}
+    <div class="result-box">
+      <div class="result-row"><span class="result-key">Prediction</span>
+        <span class="result-val">
+          {% if result.prediction == 'phishing' %}<span class="badge badge-danger">Suspicious / Phishing-like</span>
+          {% else %}<span class="badge badge-success">Legitimate-looking</span>{% endif %}
+        </span>
+      </div>
+      <div class="result-row"><span class="result-key">Confidence</span><span class="result-val">{{ result.confidence }}%</span></div>
+    </div>
+    <p class="text-muted mt-16" style="font-size:12px;">This is a lexical/structural model for education — always verify independently before trusting or entering credentials on any site.</p>
+    {% else %}
+    <div class="result-box"><span class="text-muted">{{ result.message }}</span></div>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

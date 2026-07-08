@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ tool_name }}{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">{{ tool_name }}</div><div class="page-subtitle">Planned for a future update</div></div>
+</div>
+<div class="glass-panel" style="text-align:center; padding:50px;">
+  <div style="font-size:40px;">🚧</div>
+  <div class="page-title" style="font-size:18px; margin-top:12px;">{{ tool_name }} is on the roadmap</div>
+  <p class="text-muted mt-16">This module isn't built yet in this version of SentinelX. Check the README roadmap section for what's planned next, or extend <code>routes/tools.py</code> to add it yourself.</p>
+</div>
+{% endblock %}

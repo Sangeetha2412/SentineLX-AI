@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Hash Checker{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">✅ Hash Checker</div><div class="page-subtitle">Verify whether a hash matches given text.</div></div>
+</div>
+<div class="glass-panel">
+  <form method="POST">
+    <div class="form-group"><label class="form-label">Original Text</label><input type="text" name="text" class="form-input" required></div>
+    <div class="form-group"><label class="form-label">Hash to Verify</label><input type="text" name="provided_hash" class="form-input" required></div>
+    <button type="submit" class="btn btn-primary">Check Hash</button>
+  </form>
+  {% if result %}
+  <div class="result-box">
+    <div class="result-row"><span class="result-key">Match Found</span>
+      <span class="result-val">{% if result.is_match %}<span class="badge badge-success">YES</span>{% else %}<span class="badge badge-danger">NO</span>{% endif %}</span>
+    </div>
+    {% if result.matches %}
+    <div class="result-row"><span class="result-key">Matched Algorithm(s)</span><span class="result-val">{{ result.matches|join(', ')|upper }}</span></div>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">👤 Profile</div><div class="page-subtitle">Your account overview</div></div>
+</div>
+<div class="grid-2">
+  <div class="glass-panel">
+    <div class="result-row"><span class="result-key">Username</span><span class="result-val">{{ current_user.username }}</span></div>
+    <div class="result-row"><span class="result-key">Email</span><span class="result-val">{{ current_user.email }}</span></div>
+    <div class="result-row"><span class="result-key">Role</span><span class="result-val">{{ current_user.role }}</span></div>
+    <div class="result-row"><span class="result-key">Joined</span><span class="result-val">{{ current_user.created_at.strftime('%b %d, %Y') }}</span></div>
+    <div class="result-row"><span class="result-key">Last Login</span><span class="result-val">{{ current_user.last_login.strftime('%b %d, %Y %H:%M') if current_user.last_login else '-' }}</span></div>
+  </div>
+  <div class="grid-2" style="gap:18px;">
+    <div class="stat-card"><div class="stat-value">{{ scan_count }}</div><div class="stat-label">Scans Run</div></div>
+    <div class="stat-card"><div class="stat-value">{{ report_count }}</div><div class="stat-label">Reports</div></div>
+  </div>
+</div>
+{% endblock %}

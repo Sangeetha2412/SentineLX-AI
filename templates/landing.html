@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}AI-Powered Cybersecurity Intelligence{% endblock %}
+{% block guest_content %}
+<div class="hero">
+  <h1>SentinelX</h1>
+  <p>AI-powered cybersecurity intelligence for defenders and learners. Analyze passwords, hashes, DNS, SSL certificates, and web security headers — with an AI assistant that explains every result.</p>
+  <div class="hero-actions">
+    <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Get Started Free</a>
+    <a href="{{ url_for('auth.login') }}" class="btn btn-ghost">Sign In</a>
+  </div>
+</div>
+
+<div class="feature-grid">
+  <div class="glass-panel">
+    <div class="tool-icon">🔐</div>
+    <div class="tool-title">Password Intelligence</div>
+    <div class="tool-desc">ML-backed strength analysis, entropy scoring, and a cryptographically secure generator.</div>
+  </div>
+  <div class="glass-panel">
+    <div class="tool-icon">🕵️</div>
+    <div class="tool-title">Recon Toolkit</div>
+    <div class="tool-desc">WHOIS, DNS, IP geolocation, SSL certificate and security header analysis — all in one place.</div>
+  </div>
+  <div class="glass-panel">
+    <div class="tool-icon">🤖</div>
+    <div class="tool-title">AI Security Assistant</div>
+    <div class="tool-desc">Groq-powered assistant that explains vulnerabilities and scan results in plain language.</div>
+  </div>
+  <div class="glass-panel">
+    <div class="tool-icon">📄</div>
+    <div class="tool-title">Exportable Reports</div>
+    <div class="tool-desc">Turn your scan history into a polished PDF security report in one click.</div>
+  </div>
+</div>
+{% endblock %}

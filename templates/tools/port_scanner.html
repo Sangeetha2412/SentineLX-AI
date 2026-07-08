@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Port Scanner{% endblock %}
+{% block content %}
+<div class="topbar">
+  <div><div class="page-title">🔌 Port Scanner</div><div class="page-subtitle">TCP-connect scan of common ports — authorized targets only.</div></div>
+</div>
+<div class="glass-panel">
+  <div class="alert alert-error" style="background:rgba(245,158,11,0.08); border-color:rgba(245,158,11,0.4); color:#fcd34d;">
+    ⚠️ Only scan systems you own or have explicit written authorization to test. Scanning systems without permission may be illegal in your jurisdiction.
+  </div>
+  <form method="POST">
+    <div class="form-group"><label class="form-label">Host</label><input type="text" name="host" class="form-input" placeholder="example.com or 192.168.1.1" required></div>
+    <div class="form-group">
+      <label class="form-check"><input type="checkbox" name="authorized" required> I confirm I own this system or have explicit written authorization to scan it.</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Run Scan</button>
+  </form>
+
+  {% if error %}
+  <div class="result-box"><span style="color:var(--danger);">{{ error }}</span></div>
+  {% endif %}
+
+  {% if result %}
+    {% if result.success %}
+    <div class="result-box">
+      <div class="result-row"><span class="result-key">Host</span><span class="result-val">{{ result.host }} ({{ result.ip }})</span></div>
+      <div class="result-row"><span class="result-key">Ports Scanned</span><span class="result-val">{{ result.scanned_count }}</span></div>
+      <div class="result-row"><span class="result-key">Open Ports</span><span class="result-val">{{ result.open_ports|length }}</span></div>
+    </div>
+    <table class="data-table mt-16">
+      <thead><tr><th>Port</th><th>Service</th></tr></thead>
+      <tbody>
+        {% for p in result.open_ports %}
+        <tr><td>{{ p.port }}</td><td>{{ p.service }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="result-box"><span style="color:var(--danger);">Error: {{ result.error }}</span></div>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}
